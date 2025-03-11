@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 19
+names: ['hata_1.1', 'hata_2.1', 'hata_2.2', 'hata_2.3', 'hata_3.1', 'hata_3.2', 'hata_4.1', 'hata_4.2', 'hata_5.1', 'hata_5.2', 'hata_5.3', 'hata_7.1', 'hata_7.2', 'hata_8.1', 'hata_8.2', 'hata_8.3', 'hata_9.1', 'hata_9.2', 'hata_9.3']
+
+roboflow:
+  workspace: checker-bfh34
+  project: checkerapp
+  version: 2
+  license: Private
+  url: https://app.roboflow.com/checker-bfh34/checkerapp/2
