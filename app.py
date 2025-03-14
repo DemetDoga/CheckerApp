@@ -11,14 +11,14 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# 📌 **DATA.YAML'dan HATA SINIFLARINI OKU**
-DATA_YAML_PATH = "data.yaml"  # Eğer dosyanın konumu farklıysa, güncelle
+
+DATA_YAML_PATH = "data.yaml"  
 with open(DATA_YAML_PATH, "r") as f:
     data_yaml = yaml.safe_load(f)
-CLASS_NAMES = data_yaml["names"]  # Hata isimlerini al
+CLASS_NAMES = data_yaml["names"]  
 
-# 📌 **YOLOv8 Modelini Yükle**
-MODEL_PATH = "runs/detect/train/weights/best.pt"
+
+MODEL_PATH = "runs/detect/train2/weights/best.pt"
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"❌ Model dosyası bulunamadı: {MODEL_PATH}")
 
@@ -41,19 +41,19 @@ def detect():
 
         print(f"✅ Dosya başarıyla yüklendi: {file_path}")
 
-        # 📌 **YOLO Modeliyle görüntüyü analiz et**
+        
         results = model.predict(file_path)
 
         detections = []
         for r in results:
             for box in r.boxes:
-                class_index = int(box.cls[0].item())  # Hata sınıfı index
-                class_name = CLASS_NAMES[class_index]  # 📌 **Gerçek hata ismini al**
+                class_index = int(box.cls[0].item())  
+                class_name = CLASS_NAMES[class_index]  
 
                 detections.append({
-                    "class": class_name,  # 📌 **Artık sayısal index yerine hata ismi**
-                    "confidence": round(float(box.conf[0].item()) * 100, 2),  # 📌 Yüzdelik format
-                    "bbox": [round(float(x), 2) for x in box.xyxy[0].tolist()]  # 📌 Koordinatları yuvarla
+                    "class": class_name,  
+                    "confidence": round(float(box.conf[0].item()) * 100, 2),  
+                    "bbox": [round(float(x), 2) for x in box.xyxy[0].tolist()]
                 })
 
         return jsonify({
